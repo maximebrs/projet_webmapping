@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartographie des strates - Bretagne 24-25</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <h1>ꕥ CLASSIFICATION DES STRATES VÉGÉTALES EN BRETAGNE PAR TÉLÉDÉTECTION</h1>
+            
+            <nav id="main-nav">
+                <button class="nav-btn active" onclick="showSection('map-section')">EXPLORATION CARTOGRAPHIQUE</button>
+                <button class="nav-btn" onclick="showSection('analysis-section')">METHODE ET ANALYSE</button>
+            </nav>
+        </div>
+    </header>
+
+    <main id="content">
+        <section id="map-section" class="page-section active">
+            <aside id="sidebar">
+                <h3>Exploration</h3>
+                <div id="opacity-control">
+                    <label>Transparence</label>
+                    <input id="sldOpacity" type="range" min="0" max="1" step="0.1" value="0.7">
+                </div>
+                <h3>Répartition des classes</h3>
+                <div id="stats-container">
+                    <div class="kpi-card">
+                        <span class="kpi-label">Surface Totale Étudiée</span>
+                        <span class="kpi-value">750 ha</span> </div>
+                    <div class="chart-box">
+                        <canvas id="donutSurface"></canvas>
+                    </div>
+                </div>
+            </aside>
+            <div id="map"></div>
+        </section>
+
+        <section id="analysis-section" class="page-section">
+            <div class="analysis-container">
+                <h2>Contexte de l'analyse : Strates Végétales</h2>
+                <hr>
+                <h3>1. Source des données</h3>
+                <p>
+                    <ul>
+                        <li><strong>Images satellites :</strong> Séries temporelles Sentinel-2 acquises à 6 dates réparties sur l'année 2024 (Mars, Avril, Mai, Juin, Juillet et Août). Les images sont composées de 8 bandes spectrales (B02, B03, B04, B05, B08, B8A, B11, B12).</li>
+                        <li><strong>Zone d'étude :</strong> Bretagne</li>
+                        <li><strong>Échantillons :</strong> Données vectorielles obtenues par photo-interprétation classées selon une nomenclature de 4 strates : Sol Nu, Herbe, Landes et Arbre.</li>
+                    </ul>
+                </p>
+                
+                <h3>2. Méthodologie : Random Forest</h3>
+                <p>
+                    <ul>
+                        <li><strong>Prétraitement :</strong> Calcul de l'indice de phénologie ARI (Normalized Anthocyanin Reflectance Index) pour aider à mettre en évidence les landes.</li>
+                        <li><strong>Processus :</strong> Classification supervisée par Random Forest via la bibliothèque scikit-learn de python.</li>
+                        <li><strong>Optimisation :</strong> Recherche des meilleurs hyperparamètres par GridSearchCV avec une validation croisée (K-fold) pour garantir la robustesse du modèle.</li>
+                    </ul>
+                </p>                
+                <h3>3. Représentation Cartographique</h3>
+                <p>
+                    <ul>
+                        <li><strong>Infrastructure :</strong> Résultats diffusés par GeoServer via un flux WMS.</li>
+                        <li><strong>Sémiologie :</strong> Style SLD spécifique appliqué pour assurer une lecture immédiate.</li>
+                    </ul>
+                </p>            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>
+            IBRES Maxime - Master 2 Sigma - 2025/2026
+            | Projet UE 902-1 WebMapping
+            | Données issue du projet UE 901-21 Télédetection Avancée [ <a href="https://github.com/maximebrs/projet_telea_IBRES" target="_blank">CODE SOURCE</a> ]
+        </p>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js"></script>
+
+</body>
+</html>

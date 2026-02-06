@@ -1,0 +1,213 @@
+/* 1. RESET ET STRUCTURE DE BASE */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* 2. HEADER VERT FORÊT */
+header {
+    background-color: #1b4332;
+    color: white;
+    padding: 15px;
+    flex-shrink: 0; /* Empêche le header de s'écraser */
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap; /* Permet au titre de passer au dessus des boutons sur petit écran */
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.2em;
+    padding-bottom: 5px;
+}
+
+/* 3. NAVIGATION */
+#main-nav {
+    display: flex;
+    gap: 10px;
+}
+
+.nav-btn {
+    padding: 8px 12px;
+    cursor: pointer;
+    background-color: #40916c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.85em;
+    font-weight: bold;
+}
+
+.nav-btn.active {
+    background-color: #d8f3dc;
+    color: #1b4332;
+}
+
+/* 4. CONTENU PRINCIPAL */
+main {
+    flex: 1; /* prend tout l'espace disponible */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Important pour Desktop */
+}
+
+.page-section {
+    display: none;
+    flex: 1;
+    width: 100%;
+    height: 100%;
+}
+
+.page-section.active {
+    display: flex;
+}
+
+/* MISE EN PAGE EXPLORATION (Desktop) */
+#map-section.active {
+    flex-direction: row;
+}
+
+#sidebar {
+    width: 300px;
+    background: #f8f9fa;
+    border-right: 2px solid #1b4332;
+    padding: 15px;
+    overflow-y: auto;
+}
+
+#sldOpacity {
+    -webkit-appearance: none; /* Supprime le style par défaut */
+    width: 100%;
+    height: 8px;
+    background: #d8f3dc; /* Vert très clair (le même que ton bouton actif) */
+    border-radius: 5px;
+    outline: none;
+    margin: 15px 0;
+}
+
+#sldOpacity::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #1b4332;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background 0.3s ease;
+}
+
+.kpi-card {
+    background: #f8f9fa;
+    border-left: 4px solid #1b4332;
+    padding: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.kpi-label { display: block; font-size: 0.8em; color: #666; }
+.kpi-value { font-size: 1.4em; font-weight: bold; color: #1b4332; }
+
+.chart-box {
+    width: 100%;
+    max-width: 250px; /* Limite la largeur */
+    height: 250px;    /* Fixe la hauteur */
+    margin: 0 auto;   /* Centre le graphique */
+    position: relative;
+}
+
+#map {
+    flex: 1;
+    height: 100%;
+}
+
+/* SECTION ANALYSE */
+.analysis-container {
+    width: 100%;
+    padding: 20px;
+    overflow-y: auto;
+    box-sizing: border-box; /* Crucial : inclut le padding dans la largeur */
+}
+
+/* CORRECTION DU TEXTE : Forcer le retour à la ligne */
+.analysis-container p, .analysis-container li {
+    word-wrap: break-word; /* Casse les mots trop longs */
+    overflow-wrap: break-word;
+    white-space: normal; /* Autorise le retour à la ligne standard */
+    line-height: 1.5;
+}
+
+/* 5. FOOTER */
+footer {
+    background-color: #1b4332;
+    color: white;
+    text-align: center;
+    padding: 5px;
+    font-size: 0.8em;
+    flex-shrink: 0; /* Empêche le footer de rétrécir */
+}
+
+footer a {
+    color: #d8f3dc;
+    font-weight: bold;
+    border-bottom: 1px solid transparent;
+    transition: all 0.3s ease;
+}
+
+footer a:hover {
+    color: #ffffff;
+    border-bottom: 1px solid #ffffff;
+}
+
+/* 6. MODE RESPONSIVE (MOBILE) */
+@media (max-width: 768px) {
+    /* 1. Autorise le défilement de la page pour atteindre le footer */
+    html, body {
+        overflow-y: auto !important;
+        height: auto !important;
+        min-height: 100vh; /* S'assure que le body fait au moins la taille de l'écran */
+    }
+
+    /* 2. Empilement vertical strict des sections */
+    .page-section.active {
+        display: block !important; /* Désactive le flex pour un empilement naturel */
+        height: auto !important;
+    }
+
+    /* 3. Sidebar en haut */
+    #sidebar {
+        width: 100% !important;
+        display: block !important;
+        height: auto !important;
+        border-right: none;
+        border-bottom: 2px solid #1b4332;
+        box-sizing: border-box;
+        flex: none;
+    }
+
+    /* 4. Carte juste en dessous */
+    #map {
+        width: 100% !important;
+        height: 50vh !important; /* Force la hauteur pour qu'elle ne soit pas écrasée */
+        display: block !important;
+        margin-top: 10px;
+        flex: none;
+    }
+
+    /* 5. Footer bien visible en bas de la colonne */
+    footer {
+        width: 100%;
+        position: relative;
+    }
+}
+
+/* STYLES LISTES */
+ul { list-style: none; padding-left: 0; }
+ul li::before { content: "➤ "; color: #40916c; margin-right: 5px; }
