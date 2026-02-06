@@ -35,7 +35,6 @@ var mesStrates = L.tileLayer.wms("https://www.geotests.net/geoserver/ibresm/wms"
 
 mesStrates.on('tileerror', function(error) {
     console.error("Erreur de chargement GeoServer : Le serveur est probablement hors ligne.");
-    // Optionnel : afficher un message discret à l'utilisateur
     alert("Le service de données (GeoServer) semble indisponible pour le moment.");
 });
 
@@ -45,7 +44,7 @@ handle.oninput = function() {
     mesStrates.setOpacity(this.value);
 };
 
-// Ajout du contrôleur de couches (le menu pour cocher/décocher)
+// Ajout du contrôleur de couches
 var baseMaps = {
     "Images Satellite (IGN)": ortho_ign,
     "OpenStreetMap": osm
@@ -59,11 +58,9 @@ function showSection(sectionId) {
     // 1. Cacher toutes les sections
     document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
     document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-
     // 2. Afficher la section demandée
     document.getElementById(sectionId).classList.add('active');
     event.currentTarget.classList.add('active');
-
     // 3. IMPORTANT : Recalculer la taille de la carte si on l'affiche
     if(sectionId === 'map-section') {
         setTimeout(() => { map.invalidateSize(); }, 200);
